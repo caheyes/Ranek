@@ -37,7 +37,9 @@
       "parser": "@babel/eslint-parser"
     },
     "rules": {
-      "vue/html-quotes": "double"
+      "vue/html-quotes": [
+        "double"
+      ]
     }
   },
   "browserslist": [
