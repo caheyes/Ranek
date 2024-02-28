@@ -39,7 +39,7 @@
     },
     "rules": {
       "vue/html-quotes": [
-        "double"
+        2
       ]
     }
   },

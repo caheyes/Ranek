@@ -3,8 +3,8 @@ import createService from './axiosApiService';
 const api = createService('http://localhost:3000/');
 
 export default {
-  getProdutos() {
-    return api.get('/produto');
+  getProdutos(dto) {
+    return api.get('/produto' + dto);
   },
 
   // sendData(data) {
