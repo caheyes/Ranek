@@ -8,3 +8,16 @@ export function serialize(obj) {
 
   return queryString;
 }
+
+export function filtroPreco(valor) {
+  valor = Number(valor);
+
+  if (!isNaN(valor)) {
+    return valor.toLocaleString('pt-BR', {
+      style: 'currency', //estilo de moeda
+      currency: 'BRL',
+    });
+  } else {
+    return '';
+  }
+}
