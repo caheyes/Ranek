@@ -40,6 +40,24 @@ export default createStore({
       context.commit('UPDATE_USUARIO', { id: payload.email }); //atualizando o id primeiro
       return UsuarioService.postUsuario(payload);
     },
+
+    deslogarUsuario(context) {
+      //limpando o usuario
+      context.commit('UPDATE_USUARIO', {
+        id: '',
+        nome: '',
+        email: '',
+        senha: '',
+        cep: '',
+        rua: '',
+        numero: '',
+        bairro: '',
+        cidade: '',
+        estado: '',
+      });
+
+      context.commit('UPDATE_LOGIN', false);
+    },
   },
   modules: {},
 });

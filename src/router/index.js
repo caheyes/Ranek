@@ -3,6 +3,10 @@ import LoginView from '../views/LoginView.vue';
 import HomeView from '../views/HomeView.vue';
 import ProdutoView from '../views/ProdutoView.vue';
 import UsuarioView from '../views/usuario/UsuarioView.vue';
+import UsuarioProdutos from '../views/usuario/UsuarioProdutos.vue';
+import UsuarioCompras from '../views/usuario/UsuarioCompras.vue';
+import UsuarioVendas from '../views/usuario/UsuarioVendas.vue';
+import UsuarioEditar from '../views/usuario/UsuarioEditar.vue';
 
 const routes = [
   {
@@ -23,8 +27,30 @@ const routes = [
   },
   {
     path: '/usuario',
-    name: 'usuario',
     component: UsuarioView,
+    //rotas filhas children, o router-view fica dentro fo componente pai
+    children: [
+      {
+        path: '',
+        name: 'usuario',
+        component: UsuarioProdutos,
+      },
+      {
+        path: 'compras',
+        name: 'compras',
+        component: UsuarioCompras,
+      },
+      {
+        path: 'vendas',
+        name: 'vendas',
+        component: UsuarioVendas,
+      },
+      {
+        path: 'editar',
+        name: 'usuario-editar',
+        component: UsuarioEditar,
+      },
+    ],
   },
 ];
 
