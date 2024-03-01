@@ -1,9 +1,20 @@
 import createService from './axiosApiService';
 
-const api = createService('http://localhost:3000/');
+const apiUsuario = createService('http://localhost:3000/');
+const apiCep = createService('http://viacep.com.br/ws/');
 
 export default {
   getUsuario(dto) {
-    return api.get('/usuario/' + dto);
+    return apiUsuario.get('/usuario/' + dto);
+  },
+
+  postUsuario(data) {
+    return apiUsuario.post('/usuario', data);
+  },
+
+  getCep(dto, format = 'json') {
+    const url = `${dto}/${format}/`;
+
+    return apiCep.get(url);
   },
 };
