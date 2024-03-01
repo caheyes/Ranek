@@ -1,5 +1,6 @@
 import { createStore } from 'vuex';
 import UsuarioService from '@/services/UsuarioService';
+import ProdutoService from '@/services/ProdutoService';
 
 export default createStore({
   strict: true, //para dar erro quando faço a mudança de estado incorretamente
@@ -17,6 +18,7 @@ export default createStore({
       cidade: '',
       estado: '',
     },
+    usuario_produtos: null,
   },
   getters: {},
   mutations: {
@@ -26,8 +28,22 @@ export default createStore({
     UPDATE_USUARIO(state, payload) {
       state.usuario = Object.assign(state.usuario, payload); //para mudar o estado que ta em objetos
     },
+    UPTADE_USUARIO_PRODUTOS(state, payload) {
+      state.usuario_produtos = payload;
+    },
+    ADD_USUARIO_PRODUTOS(state, payload) {
+      state.usuario_produtos.unshit(payload); //puxar o item para o inicio da array, igual o push mas ele manda para o final
+    },
   },
   actions: {
+    getUsuarioProdutos(context) {
+      let dto = `?usuario_id=${context.state.usuario.id}`;
+
+      ProdutoService.getProdutos(dto).then((res) => {
+        context.commit('UPTADE_USUARIO_PRODUTOS', res.data);
+      });
+    },
+
     getUsuario(context, payload) {
       //usando o return para fazer o then em outros lugares
       return UsuarioService.getUsuario(payload).then((res) => {

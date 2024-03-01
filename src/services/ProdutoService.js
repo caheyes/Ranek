@@ -7,11 +7,11 @@ export default {
     return api.get('/produto/' + dto);
   },
 
-  // sendData(data) {
-  //   return service1.post('/data', data);
-  // },
+  postProdutos(data) {
+    return api.post('/produto', data);
+  },
 
-  // deleteData(id) {
-  //   return service1.delete(`/data/${id}`);
-  // },
+  deletarProduto(id) {
+    return api.delete(`/produto/${id}`);
+  },
 };
