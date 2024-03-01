@@ -41,4 +41,8 @@
     overflow: hidden; /* esconde oq fica fora do tamanho, ai não corre o risco de esticar img */
     height: 100px;
   }
+
+  .titulo {
+    margin-bottom: 20px;
+  }
 </style>

@@ -1,11 +1,13 @@
 <template>
   <form>
-    <label for="nome">Nome</label>
-    <input id="nome" name="nome" type="text" v-model="nome">
-    <label for="email">Email</label>
-    <input id="email" name="email" type="email" v-model="email">
-    <label for="senha">Senha</label>
-    <input id="senha" name="senha" type="password" v-model="senha">
+    <div v-if="mostrarDadosLogin" class="usuario">
+      <label for="nome">Nome</label>
+      <input id="nome" name="nome" type="text" v-model="nome">
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" v-model="email" :disabled="desabilitar">
+      <label for="senha">Senha</label>
+      <input id="senha" name="senha" type="password" v-model="senha">
+    </div>
     <label for="cep">Cep</label>
     <input id="cep" name="cep" type="text" v-model="cep" @keyup="preencherCep">
     <label for="rua">Rua</label>
@@ -30,12 +32,21 @@
 
   export default {
     name: "UsuarioForm",
+    props: {
+      desabilitar: {
+        type: Boolean,
+        default: false
+      }
+    },
     computed: {
       ...mapFields({
         fields: ['nome', 'email', 'senha', 'cep', 'rua', 'numero', 'bairro', 'cidade', 'estado'],
         base: 'usuario',
         mutation: 'UPDATE_USUARIO'
-      })
+      }),
+      mostrarDadosLogin() {
+        return (!this.$store.state.login || this.$route.name === 'usuario-editar');
+      }
     },
     methods: {
       preencherCep() {
@@ -55,10 +66,14 @@
 </script>
 
 <style scoped>
-  form {
+  form, .usuario {
     display: grid;
     grid-template-columns: 80px 1fr;
     align-items: center;
+  }
+
+  .usuario {
+    grid-column: 1 / 3;
   }
 
   .button {

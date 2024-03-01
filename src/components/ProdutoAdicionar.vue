@@ -23,7 +23,8 @@
           nome: '',
           preco: '',
           fotos: null,
-          descricao: ''
+          descricao: '',
+          vendido: "false"
         }
       }
     },

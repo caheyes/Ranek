@@ -18,6 +18,10 @@ const createService = (baseURL) => {
       return apiClient.post(endpoint, data);
     },
 
+    put(endpoint, data) {
+      return apiClient.put(endpoint, data);
+    },
+
     delete(endpoint) {
       return apiClient.delete(endpoint);
     },

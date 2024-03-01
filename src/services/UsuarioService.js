@@ -12,6 +12,10 @@ export default {
     return apiUsuario.post('/usuario', data);
   },
 
+  putUsuario(data, id) {
+    return apiUsuario.put(`/usuario/${id}`, data);
+  },
+
   getCep(dto, format = 'json') {
     const url = `${dto}/${format}/`;
 
