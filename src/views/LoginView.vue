@@ -7,9 +7,10 @@
       <label for="senha">Senha</label>
       <input type="password" id="senha" name="senha" v-model="login.senha">
       <button class="btn" @click.prevent="logar">Logar</button>
+      <ErroNotificacao :erros="erros"/>
     </form>
     <p class="perdeu">
-      <a href="/" target="_blank">Perdeu a senha? Clique aqui.</a>
+      <a href="http://ranekapi.local/wp-login.php?action=lostpassword" target="_blank">Perdeu a senha? Clique aqui.</a>
     </p>
     <LoginCriar/>
   </section>
@@ -27,14 +28,23 @@
         login: {
           email: '',
           senha: ''
-        }
+        },
+        erros: []
       }
     },
     methods: {
       logar() {
+        this.erros = [];
+
         //dispatch é para acoes
-        this.$store.dispatch("getUsuario", this.login.email);
-        this.$router.push({name: 'usuario'});
+        this.$store.dispatch('logarUsuario', this.login)
+        .then(() => {
+          this.$store.dispatch("getUsuario");
+          this.$router.push({ name: "usuario" });
+        })
+        .catch(erro => {
+          this.erros.push(erro.response.data.message);
+        })
       }
     }
   }

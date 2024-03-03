@@ -3,11 +3,21 @@ import axios from 'axios';
 const createService = (baseURL) => {
   const apiClient = axios.create({
     baseURL, // Substitua pela sua URL de API
-    headers: {
-      'Content-Type': 'application/json',
-      // Adicione outros cabeçalhos, se necessário
-    },
   });
+
+  //interceção em toda api para colocar o token
+  apiClient.interceptors.request.use(
+    function (config) {
+      const token = window.localStorage.token;
+      if (token) {
+        config.headers.Authorization = token;
+      }
+      return config;
+    },
+    function (error) {
+      return Promise.reject(error);
+    },
+  );
 
   return {
     get(endpoint) {

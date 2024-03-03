@@ -36,9 +36,7 @@
     },
     methods: {
       getCompras() {
-        let idUsuario = this.usuario.id;
-
-        TransacaoService.getTransacao(idUsuario)
+        TransacaoService.getTransacao()
         .then(res => {
           this.compras = res.data;
         })

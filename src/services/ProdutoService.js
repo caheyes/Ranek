@@ -1,6 +1,6 @@
 import createService from './axiosApiService';
 
-const api = createService('http://localhost:3000/');
+const api = createService('http://ranekapi.local/wp-json/api');
 
 export default {
   getProdutos(dto) {

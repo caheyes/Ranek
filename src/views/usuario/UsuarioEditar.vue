@@ -1,8 +1,9 @@
 <template>
   <section>
-    <UsuarioForm :desabilitar="true">
+    <UsuarioForm :desabilitar="false">
       <button class="btn" @click.prevent="atualizarUsuario">Atualizar Usuário</button>
     </UsuarioForm>
+    <ErroNotificacao :erros="erros"/>
   </section>
 </template>
 
@@ -15,18 +16,24 @@
     components: {
       UsuarioForm
     },
+    data() {
+      return {
+        erros: []
+      }
+    },
     methods: {
       atualizarUsuario() {
-        let id = this.$store.state.usuario.id;
+        this.erros = [];
+
         let usuario = this.$store.state.usuario;
 
-        UsuarioService.putUsuario(usuario, id)
+        UsuarioService.putUsuario(usuario)
         .then(() => {
-          this.$store.dispatch('getUsuario', id);
+          this.$store.dispatch('getUsuario');
           this.$router.push({name: 'usuario'});
         })
-        .catch((error) => {
-          console.log(error)
+        .catch(erro => {
+          this.erros.push(erro.response.data.message);
         })
       }
     }

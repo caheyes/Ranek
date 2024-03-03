@@ -1,6 +1,7 @@
 import { createStore } from 'vuex';
 import UsuarioService from '@/services/UsuarioService';
 import ProdutoService from '@/services/ProdutoService';
+import LoginService from '@/services/LoginService';
 
 export default createStore({
   strict: true, //para dar erro quando faço a mudança de estado incorretamente
@@ -44,9 +45,9 @@ export default createStore({
       });
     },
 
-    getUsuario(context, payload) {
+    getUsuario(context) {
       //usando o return para fazer o then em outros lugares
-      return UsuarioService.getUsuario(payload).then((res) => {
+      return UsuarioService.getUsuario().then((res) => {
         context.commit('UPDATE_USUARIO', res.data);
         context.commit('UPDATE_LOGIN', true);
       });
@@ -55,6 +56,16 @@ export default createStore({
     criarUsuario(context, payload) {
       context.commit('UPDATE_USUARIO', { id: payload.email }); //atualizando o id primeiro
       return UsuarioService.postUsuario(payload);
+    },
+
+    logarUsuario(context, payload) {
+      return LoginService.login({
+        username: payload.email,
+        password: payload.senha,
+      }).then((res) => {
+        // irei guardar o token no localStorage somente pq é uma aula, guardar nele não é nada seguro em uma aplicação real
+        window.localStorage.token = `Bearer ${res.data.token}`;
+      });
     },
 
     deslogarUsuario(context) {
@@ -71,7 +82,7 @@ export default createStore({
         cidade: '',
         estado: '',
       });
-
+      window.localStorage.removeItem('token');
       context.commit('UPDATE_LOGIN', false);
     },
   },

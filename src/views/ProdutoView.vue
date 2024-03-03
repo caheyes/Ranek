@@ -16,7 +16,7 @@
             <FinalizarCompra :produto="produto" v-else/>
           </div>
         </transition>
-        <button class="btn" disabled v-else>Produto Vendido</button>
+        <button class="btn btn-disabled" disabled v-else>Produto Vendido</button>
       </div>
     </div>
     <PaginaCarregando v-else/>
@@ -70,12 +70,40 @@
     margin-bottom: 40px;
   }
 
+  .fotos {
+    grid-row: 1 / 3; /*vai ocupar 2 linhas*/
+  }
+
+  .info {
+    position: sticky; /* para quando dar o scroll isso fique posicionado e fixo*/
+    top: 20px;
+  }
+
   .descricao {
     font-size: 1.2rem;
+  }
+  
+  img {
+    margin-bottom: 30px;
+    box-shadow: 0 4px 8px rgba(30, 60, 90, .2);
+    border-radius: 4px;
   }
 
   .btn {
     margin-top: 60px;
     width: 200px;
   }
+
+  @media screen and (max-width: 500px) {
+    .produto {
+      grid-template-columns: 1fr;
+    }
+    .fotos {
+      grid-row: 2; /*passando para a coluna debaixo*/
+    }
+    .info {
+      position: initial;
+    }
+  }
+
 </style>

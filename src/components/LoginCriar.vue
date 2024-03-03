@@ -1,6 +1,7 @@
 <template>
   <section>
     <h2>Crie a Sua Conta</h2>
+    <ErroNotificacao :erros="erros"/>
     <transition mode="out-in">
       <button v-if="!criar" @click="criar = true" class="btn">Criar Conta</button>
       <UsuarioForm v-else>
@@ -20,17 +21,21 @@
     },
     data() {
       return {
-        criar: false
+        criar: false,
+        erros: []
       }
     },
     methods: {
       async criarUsuario() {
+        this.erros = [];
+
         try {
           await this.$store.dispatch("criarUsuario", this.$store.state.usuario); //acao vuex
-          await this.$store.dispatch("getUsuario", this.$store.state.usuario.email);  //puxando usuarios
+          await this.$store.dispatch("logarUsuario", this.$store.state.usuario);
+          await this.$store.dispatch("getUsuario");  //puxando usuarios
           this.$router.push({name: 'usuario'});
-        } catch (error) {
-          console.log(error);
+        } catch (erro) {
+          this.erros.push(erro.response.data.message);
         }
       }
     }
