@@ -13,11 +13,26 @@
 <script>
   import TheHeader from "@/components/TheHeader.vue";
   import TheFooter from "@/components/TheFooter.vue";
+  import LoginService from "@/services/LoginService";
 
   export default {
     components: {
       TheHeader,
       TheFooter
+    },
+    created() {
+      //quando dar o f5 na pagina, para não ficar deslogando sempre se ainda tiver o token
+      if(window.localStorage.token) {
+        //valida se o token é real
+        LoginService.validaToken()
+        .then(() => {
+          this.$store.dispatch("getUsuario"); //puxa os dados do usuario se tudo estiver ok
+        })
+        .catch(error => {
+          console.log(error);
+          window.localStorage.removeItem('token'); // caso der erro eu removo o token
+        })
+      }
     }
   }
 </script>
@@ -72,6 +87,12 @@
     transform: scale(1.1);
   }
 
+  .btn-disabled,
+  .btn-disabled:hover {
+    background: #bbc;
+    transform: scale(1);
+  }
+
   /* deixando o footer lá embaixo, 100vh sempre será o tamanho da tela */
   #app {
     display: flex;
@@ -96,6 +117,7 @@
     font-size: 1rem;
     font-family: "Avenir", Arial, Helvetica, sans-serif;
     margin-bottom: 15px;
+    width: 100%;
   }
 
   input:hover, input:focus, textarea:hover, textarea:focus {

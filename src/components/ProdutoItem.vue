@@ -2,7 +2,6 @@
   <div class="produto" v-if="produto">
     <router-link class="produto-img" :to="{name: 'produto', params: {id: produto.id}}">
       <img v-if="produto.fotos" :src="produto.fotos[0].src" :alt="produto.fotos[0].titulo">
-      <p>Ver Produto</p>
     </router-link>
     <div class="info">
       <p class="preco">{{ $filtroPreco(produto.preco) }}</p>
@@ -31,6 +30,14 @@
     margin-bottom: 40px;
     position: relative;
   }
+
+  @media screen and (max-width: 500px) {
+    .produto {
+      grid-template-columns: 1fr;
+      grid-gap: 10px;
+    }
+  }
+
 
   .info {
     align-self: end;

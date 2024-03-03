@@ -1,6 +1,7 @@
 <template>
   <section>
     <h2>Endereço de Envio</h2>
+    <ErroNotificacao :erros="erros"/>
     <UsuarioForm>
       <button class="btn" @click.prevent="finalizarCompra">Finalizar Compra</button>
     </UsuarioForm>
@@ -20,6 +21,11 @@
     props: {
       produto: {
         type: Object
+      }
+    },
+    data() {
+      return {
+        erros: []
       }
     },
     computed: {
@@ -51,14 +57,17 @@
       async criarUsuario() {
         try {
           await this.$store.dispatch("criarUsuario", this.$store.state.usuario); //acao vuex
-          await this.$store.dispatch("getUsuario", this.$store.state.usuario.email);  //puxando usuarios
+          await this.$store.dispatch("logarUsuario", this.$store.state.usuario); 
+          await this.$store.dispatch("getUsuario");  //puxando usuarios
           await this.criarTransacao();
-        } catch (error) {
-          console.log(error);
+        } catch (erro) {
+          this.erros.push(erro.response.data.message);
         }
       },
 
       finalizarCompra() {
+        this.erros = [];
+        
         if(this.$store.state.login) {
           this.criarTransacao();
         } else {

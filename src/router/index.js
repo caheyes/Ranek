@@ -28,6 +28,10 @@ const routes = [
   {
     path: '/usuario',
     component: UsuarioView,
+    //para fazer navigation guard, onde não permite certas rotas em algumas situações
+    meta: {
+      login: true,
+    },
     //rotas filhas children, o router-view fica dentro fo componente pai
     children: [
       {
@@ -61,6 +65,22 @@ const router = createRouter({
     //toda vez que mudar a rota dá um scrol para o topo
     return window.scrollTo({ top: 0, behavior: 'smooth' });
   },
+});
+
+//para fazer navigation guard, onde não permite certas rotas em algumas situações
+router.beforeEach((to, from, next) => {
+  //antes de cada router entrar
+  //se login for true
+  if (to.matched.some((record) => record.meta.login)) {
+    //se não tiver token manda para o login
+    if (!window.localStorage.token) {
+      next('/login');
+    } else {
+      next(); //permite ir para a rota
+    }
+  } else {
+    next(); //permite ir para a rota se não exigir login
+  }
 });
 
 export default router;

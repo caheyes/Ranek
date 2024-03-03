@@ -1,17 +1,18 @@
 import createService from './axiosApiService';
 
-const apiUsuario = createService('http://localhost:3000/');
+const apiUsuario = createService('http://ranekapi.local/wp-json/api');
 
 export default {
   postTransacao(data) {
     return apiUsuario.post('/transacao', data);
   },
 
-  getTransacao(dto) {
-    return apiUsuario.get('/transacao?comprador_id=' + dto);
+  getTransacao() {
+    //para ter mais segurança na api ?tipo= ao inves do id do usuário, ai ele pega os dados do usuário logado no store.state
+    return apiUsuario.get('/transacao?tipo=comprador_id');
   },
 
-  getTransacaoVendedor(dto) {
-    return apiUsuario.get('/transacao?vendedor_id=' + dto);
+  getTransacaoVendedor() {
+    return apiUsuario.get('/transacao?tipo=vendedor_id');
   },
 };

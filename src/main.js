@@ -7,7 +7,9 @@ const app = createApp(App);
 
 //IMPORTS COMPONENTS
 import PaginaCarregando from '../src/components/PaginaCarregando';
+import ErroNotificacao from '../src/components/ErroNotificacao';
 app.component('PaginaCarregando', PaginaCarregando);
+app.component('ErroNotificacao', ErroNotificacao);
 
 //IMPORT UTILS
 import { filtroPreco } from './utils/helpers';
